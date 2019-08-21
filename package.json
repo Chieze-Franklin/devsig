@@ -1,0 +1,24 @@
+{
+  "name": "daemon",
+  "version": "1.0.0",
+  "description": "a daemon for collecting certain info from the host machine",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Chieze-Franklin/daemon.git"
+  },
+  "author": "",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/Chieze-Franklin/daemon/issues"
+  },
+  "homepage": "https://github.com/Chieze-Franklin/daemon#readme",
+  "dependencies": {
+    "active-win": "^5.1.2",
+    "iohook": "^0.6.1",
+    "node-cron": "^2.0.3"
+  }
+}
