@@ -1,5 +1,5 @@
-const startService = require('./start-service');
+const startMonitor = require('./start-monitor');
 
 module.exports = {
-  startService
+  startMonitor
 };
