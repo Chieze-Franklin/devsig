@@ -32,12 +32,12 @@ module.exports = function(monitor, options) {
       mtr.start();
       const name = mtr.name || m;
       log(`started monitor: ${yellow(name)}`);
-      // mtr.on('data', (msg) => log(blueBright(`${name}: ${msg}`)));
-      mtr.on('error', (msg) => log(redBright(`${name}: ${msg}`)));
-      mtr.on('failure', (msg) => log(redBright(`${name}: ${msg}`)));
-      mtr.on('info', (msg) => log(blueBright(`${name}: ${msg}`)));
-      mtr.on('success', (msg) => log(greenBright(`${name}: ${msg}`)));
-      mtr.on('warning', (msg) => log(yellowBright(`${name}: ${msg}`)));
+      // mtr.on('data', (msg) => log(blueBright(`[${name}] ${msg}`)));
+      mtr.on('error', (msg) => log(redBright(`[${name}] ${msg}`)));
+      mtr.on('failure', (msg) => log(redBright(`[${name}] ${msg}`)));
+      mtr.on('info', (msg) => log(blueBright(`[${name}] ${msg}`)));
+      mtr.on('success', (msg) => log(greenBright(`[${name}] ${msg}`)));
+      mtr.on('warning', (msg) => log(yellowBright(`[${name}] ${msg}`)));
     });
   } catch (error) {
     log(redBright(error.message));
