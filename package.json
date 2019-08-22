@@ -1,29 +1,30 @@
 {
-  "name": "daemon",
+  "name": "dmon",
   "version": "1.0.0",
-  "description": "a daemon for collecting certain info from the host machine",
-  "main": "cli.js",
+  "description": "a daemon for collecting work logs from the host machine",
+  "main": "dmon.js",
   "scripts": {
     "install": "yarn link",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Chieze-Franklin/daemon.git"
+    "url": "git+https://github.com/Chieze-Franklin/dmon.git"
   },
   "author": "",
   "license": "UNLICENSED",
   "bugs": {
-    "url": "https://github.com/Chieze-Franklin/daemon/issues"
+    "url": "https://github.com/Chieze-Franklin/dmon/issues"
   },
-  "homepage": "https://github.com/Chieze-Franklin/daemon#readme",
+  "homepage": "https://github.com/Chieze-Franklin/dmon#readme",
   "dependencies": {
     "active-win": "^5.1.2",
     "chalk": "^2.4.2",
     "commander": "^3.0.0",
     "inquirer": "^6.5.1",
     "iohook": "^0.6.1",
-    "node-cron": "^2.0.3"
+    "node-cron": "^2.0.3",
+    "simple-node-logger": "^18.12.23"
   },
   "preferGlobal": true,
   "bin": "./cli.js"

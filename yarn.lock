@@ -586,7 +586,7 @@ load-json-file@^1.0.0:
     pinkie-promise "^2.0.0"
     strip-bom "^2.0.0"
 
-lodash@^4.17.15:
+lodash@^4.17.12, lodash@^4.17.15:
   version "4.17.15"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
   integrity sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==
@@ -653,6 +653,11 @@ mkdirp@^0.5.1:
   integrity sha1-MAV0OOrGz3+MR2fzhkjWaX11yQM=
   dependencies:
     minimist "0.0.8"
+
+moment@^2.20.1:
+  version "2.24.0"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.24.0.tgz#0d055d53f5052aa653c9f6eb68bb5d12bf5c2b5b"
+  integrity sha512-bV7f+6l2QigeBBZSM/6yTNq4P2fNpSWj/0e7jQcy87A8e7o2nAfP/34/2ky5Vw4B9S446EtIhodAzkFCcR4dQg==
 
 ms@2.0.0:
   version "2.0.0"
@@ -1050,6 +1055,14 @@ signal-exit@^3.0.0, signal-exit@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.2.tgz#b5fdc08f1287ea1178628e415e25132b73646c6d"
   integrity sha1-tf3AjxKH6hF4Yo5BXiUTK3NkbG0=
+
+simple-node-logger@^18.12.23:
+  version "18.12.23"
+  resolved "https://registry.yarnpkg.com/simple-node-logger/-/simple-node-logger-18.12.23.tgz#8a5e2f83ad2cb2b779c736fa5493486a3ee8b10d"
+  integrity sha512-HmqRYDNfdHcrV81UoMQij4mCOn1vjh3GdJJbWeb7aW72vEDU1SStbZI9uV4Tv0zXZ8ADDT3i7keGPZ73n6h4lA==
+  dependencies:
+    lodash "^4.17.12"
+    moment "^2.20.1"
 
 single-line-log@^1.1.2:
   version "1.1.2"

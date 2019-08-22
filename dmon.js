@@ -8,7 +8,7 @@ process.on('uncaughtException', (error) => {
 
 const program = require('commander');
 
-const { startService } = require('./commands');
+const { startMonitor } = require('./commands');
 const { getAndVerifyEmail } = require('./middleware');
 
 function commaSeparatedList(value, previous) {
@@ -17,16 +17,16 @@ function commaSeparatedList(value, previous) {
 
 program
   .version('0.0.1')
-  .description('LearnTech Agent');
+  .description('DMon Agent');
 
 program
-  .command('start [service]')
+  .command('start [monitor]')
   .option('-a, --apps <apps>', 'list the apps to monitor', commaSeparatedList)
   .option('-k, --key-events <events>', 'list the keyboard events to monitor', commaSeparatedList)
   .option('-m, --mouse-events <events>', 'list the mouse events to monitor', commaSeparatedList)
-  .description('Start a service or all services')
+  .description('Start a monitor or all monitors')
   //.action(getAndVerifyEmail)
-  .action(startService);
+  .action(startMonitor);
 
 program.parse(process.argv);
   
