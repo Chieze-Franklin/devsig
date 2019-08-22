@@ -2,8 +2,9 @@
   "name": "daemon",
   "version": "1.0.0",
   "description": "a daemon for collecting certain info from the host machine",
-  "main": "index.js",
+  "main": "cli.js",
   "scripts": {
+    "install": "yarn link",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -23,5 +24,7 @@
     "inquirer": "^6.5.1",
     "iohook": "^0.6.1",
     "node-cron": "^2.0.3"
-  }
+  },
+  "preferGlobal": true,
+  "bin": "./cli.js"
 }
