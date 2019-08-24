@@ -4,7 +4,6 @@
   "description": "a daemon for collecting work logs from the host machine",
   "main": "dmon.js",
   "scripts": {
-    "install": "yarn link",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -23,6 +22,7 @@
     "commander": "^3.0.0",
     "inquirer": "^6.5.1",
     "iohook": "^0.6.1",
+    "is-online": "^8.2.0",
     "mkdirp": "^0.5.1",
     "node-cron": "^2.0.3",
     "simple-node-logger": "^18.12.23"

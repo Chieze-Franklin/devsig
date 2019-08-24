@@ -1,11 +1,16 @@
 const activeWin = require('active-win');
+const cron = require('node-cron');
 const iohook = require('iohook');
+const isOnline = require('is-online');
 
 const config = require('../services/config');
 const log = require('../services/log');
 
+// note: if we need more detailed system info: https://www.npmjs.com/package/systeminformation
+
 let appsToLog, eventsToLog;
 let logger;
+let connected = false;
 
 async function logEvent(msg) {
   const window = await activeWin();
@@ -20,7 +25,12 @@ async function logEvent(msg) {
         y: msg.y,
         type: msg.type // note that 'type' is the only thing we log for key events
       },
-      window
+      window,
+      system: {
+        network: {
+          connected
+        }
+      }
     });
   }
 }
@@ -42,6 +52,9 @@ iohook.init = (options) => {
   const mouseEvents = options.mouseEvents || config.get('monitor.mouseEvents') || [];
   eventsToLog = keyEvents.concat(mouseEvents);
   logger = log.getLogger('app-usage');
+  cron.schedule("*/5 * * * * *", async () => {
+    connected = await isOnline();
+  });
 }
 iohook.name = 'app-usage';
 
