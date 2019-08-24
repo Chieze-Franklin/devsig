@@ -2,9 +2,10 @@ const emitter = require('events').EventEmitter;
 const activeWin = require('active-win');
 const cron = require('node-cron');
 
+const config = require('../services/config');
 const log = require('../services/log');
 
-let appsToLog = [];
+let appsToLog;
 let currentApp, currentView;
 let logger;
 
@@ -18,7 +19,7 @@ em.on('data', (window) => {
 });
 
 em.init = (options) => {
-  appsToLog = options.apps || appsToLog;
+  appsToLog = options.apps || config.get('monitor.apps') || [];
   logger = log.getLogger('active-win');
 }
 em.name = 'active-win';

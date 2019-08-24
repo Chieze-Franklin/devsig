@@ -1,15 +1,14 @@
 #!/usr/bin/env node
 const chalk = require('chalk');
+const program = require('commander');
+
+const { editConfig, startMonitor } = require('./commands');
+const { getAndVerifyEmail } = require('./middleware');
 
 process.on('uncaughtException', (error) => {
   console.log(chalk.redBright(error.message));
   console.log(error);
 });
-
-const program = require('commander');
-
-const { startMonitor } = require('./commands');
-const { getAndVerifyEmail } = require('./middleware');
 
 function commaSeparatedList(value, previous) {
   return value.split(',');
@@ -27,6 +26,11 @@ program
   .description('Start a monitor or all monitors')
   //.action(getAndVerifyEmail)
   .action(startMonitor);
+
+program
+  .command('config [field] [value]')
+  .description('Get or set the value of a config field')
+  .action(editConfig);
 
 program.parse(process.argv);
   
