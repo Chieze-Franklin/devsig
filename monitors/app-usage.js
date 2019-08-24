@@ -1,9 +1,10 @@
 const activeWin = require('active-win');
 const iohook = require('iohook');
 
+const config = require('../services/config');
 const log = require('../services/log');
 
-let appsToLog = [], eventsToLog = [];
+let appsToLog, eventsToLog;
 let logger;
 
 async function logEvent(msg) {
@@ -36,9 +37,9 @@ iohook.on('mousedrag', (msg) => logEvent(msg));
 // iohook.setDebug(true);
 
 iohook.init = (options) => {
-  appsToLog = options.apps || appsToLog;
-  const keyEvents = options.keyEvents || [];
-  const mouseEvents = options.mouseEvents || [];
+  appsToLog = options.apps || config.get('monitor.apps') || [];
+  const keyEvents = options.keyEvents || config.get('monitor.keyEvents') || [];
+  const mouseEvents = options.mouseEvents || config.get('monitor.mouseEvents') || [];
   eventsToLog = keyEvents.concat(mouseEvents);
   logger = log.getLogger('app-usage');
 }

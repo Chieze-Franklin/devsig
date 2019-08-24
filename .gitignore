@@ -61,5 +61,8 @@ typings/
 # next.js build output
 .next
 
+# auto-generated config file
+.config.json
+
 # personal files
 todo.txt
