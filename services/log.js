@@ -11,7 +11,8 @@ function getLogger(name) {
     errorEventName: 'error',
     logDirectory: path.join(__dirname, `../logs/${name}`),
     fileNamePattern: '<DATE>.log',
-    dateFormat: 'YYYY.MM.DD-HH'
+    dateFormat: 'YYYY.MM.DD-HH',
+    timestampFormat:'YYYY-MM-DDTHH:mm:ss.SSS'
   };
   const logger = log.createRollingFileLogger(opts);
   return logger;
