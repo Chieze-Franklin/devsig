@@ -9,27 +9,28 @@ const emitter = require('events').EventEmitter;
 const em = new emitter();
 
 let logFiles;
-let groupBy = 'name';
+let groupBy = 'title';
 
 em.init = (options) => {
   //
 }
-em.name = 'active-win';
+em.name = 'app-usage';
 em.start = () => {
-  // TODO: throw friendly msg id there is no '../logs/active-win'
+  // TODO: throw friendly msg id there is no '../logs/app-usage'
   if (!logFiles) {
-    logFiles = fs.readdirSync(path.join(__dirname, '../logs/active-win'));
+    logFiles = fs.readdirSync(path.join(__dirname, '../logs/app-usage'));
   }
   const options = {
     columnDefault: {
-      width: 40
+      width: 30
     },
-    columnCount: groupBy === 'name' ? 3 : 4,
+    columnCount: groupBy === 'name' ? 4 : 5,
   }
   const stream = createStream(options);
   if (groupBy === 'name') {
     stream.write([
       chalk.bold.greenBright('Name'),
+      chalk.bold.greenBright('Connection'),
       chalk.bold.greenBright('From'),
       chalk.bold.greenBright('To')
     ]);
@@ -37,13 +38,14 @@ em.start = () => {
     stream.write([
       chalk.bold.greenBright('Name'),
       chalk.bold.greenBright('Title'),
+      chalk.bold.greenBright('Connection'),
       chalk.bold.greenBright('From'),
       chalk.bold.greenBright('To')
     ]);
   }
-  let row = 1, lastEntry;
+  let row = 1, totalConns = 0, positiveConns = 0, lastEntry;
   for (i = 0; i < logFiles.length; i++) {
-    const liner = new lineByLine(path.join(__dirname, `../logs/active-win/${logFiles[i]}`));
+    const liner = new lineByLine(path.join(__dirname, `../logs/app-usage/${logFiles[i]}`));
     let line;
     while (line = liner.next()) {
       const lineStr = line.toString('utf8');
@@ -56,21 +58,29 @@ em.start = () => {
       const json = JSON.parse(jsonStr);
       if (!lastEntry) {
         lastEntry = {
-          name: json.owner.name,
-          title: json.title,
+          name: json.window.owner.name,
+          title: json.window.title,
+          eventType: json.event.type.startsWith('key') ? 'key' : 'mouse',
+          event: json.event.type,
+          connection: json.system.network.connected,
           from: date,
           to: date
         };
+        totalConns = 1;
+        positiveConns = json.system.network.connected ? 1 : 0;
       } else {
         if (groupBy === 'name') {
-          if (lastEntry.name === json.owner.name &&
+          if (lastEntry.name === json.window.owner.name &&
           (date.getTime() - lastEntry.to.getTime()) < 30000) {
             lastEntry.to = date;
+            totalConns += 1;
+            positiveConns += json.system.network.connected ? 1 : 0;
           } else {
             const color = (row % 2) === 0 ? chalk.white : chalk.yellow;
             row++;
             stream.write([
               color(lastEntry.name),
+              color(`${(positiveConns / totalConns) * 100}%`),
               color(lastEntry.from),
               color(lastEntry.to)
             ]);
@@ -78,26 +88,35 @@ em.start = () => {
               stream.write([
                 chalk.bgBlue('          '),
                 chalk.bgBlue('          '),
+                chalk.bgBlue('          '),
                 chalk.bgBlue('          ')
               ]);
             }
             lastEntry = {
-              name: json.owner.name,
-              title: json.title,
+              name: json.window.owner.name,
+              title: json.window.title,
+              eventType: json.event.type.startsWith('key') ? 'key' : 'mouse',
+              event: json.event.type,
+              connection: json.system.network.connected,
               from: date,
               to: date
             };
+            totalConns = 1;
+            positiveConns = json.system.network.connected ? 1 : 0;
           }
         } else {
-          if (lastEntry.name === json.owner.name && lastEntry.title === json.title &&
+          if (lastEntry.name === json.window.owner.name && lastEntry.title === json.window.title &&
           (date.getTime() - lastEntry.to.getTime()) < 30000) {
             lastEntry.to = date;
+            totalConns += 1;
+            positiveConns += json.system.network.connected ? 1 : 0;
           } else {
             const color = (row % 2) === 0 ? chalk.white : chalk.yellow;
             row++;
             stream.write([
               color(lastEntry.name),
               color(lastEntry.title),
+              color(`${(positiveConns / totalConns) * 100}%`),
               color(lastEntry.from),
               color(lastEntry.to)
             ]);
@@ -106,15 +125,21 @@ em.start = () => {
                 chalk.bgBlue('          '),
                 chalk.bgBlue('          '),
                 chalk.bgBlue('          '),
+                chalk.bgBlue('          '),
                 chalk.bgBlue('          ')
               ]);
             }
             lastEntry = {
-              name: json.owner.name,
-              title: json.title,
+              name: json.window.owner.name,
+              title: json.window.title,
+              eventType: json.event.type.startsWith('key') ? 'key' : 'mouse',
+              event: json.event.type,
+              connection: json.system.network.connected,
               from: date,
               to: date
             };
+            totalConns = 1;
+            positiveConns = json.system.network.connected ? 1 : 0;
           }
         }
       }
@@ -125,6 +150,7 @@ em.start = () => {
     row++;
     stream.write([
       color(lastEntry.name),
+      color(`${(positiveConns / totalConns) * 100}%`),
       color(lastEntry.from),
       color(lastEntry.to)
     ]);
@@ -134,35 +160,11 @@ em.start = () => {
     stream.write([
       color(lastEntry.name),
       color(lastEntry.title),
+      color(`${(positiveConns / totalConns) * 100}%`),
       color(lastEntry.from),
       color(lastEntry.to)
     ]);
   }
-
-  // em.emit('report', {
-  //   type: 'console',
-  //   data: [
-  //     ['0A', '0B', '0C'],
-  //     ['1A', '1B', '1C'],
-  //     ['2A', '2B', '2C']
-  //   ],
-  //   options: {
-  //     columns: {
-  //       0: {
-  //         alignment: 'left',
-  //         width: 10
-  //       },
-  //       1: {
-  //         alignment: 'center',
-  //         width: 10
-  //       },
-  //       2: {
-  //         alignment: 'right',
-  //         width: 10
-  //       }
-  //     }
-  //   }
-  // });
 }
 
 module.exports = em;
