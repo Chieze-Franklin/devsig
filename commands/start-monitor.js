@@ -5,14 +5,14 @@ const path = require('path');
 const { log } = console;
 const { blue, blueBright, green, greenBright, red, redBright, yellow, yellowBright } = chalk;
 
-let monitorFiles = [];
+let monitorFiles;
 
 module.exports = function(monitor, options) {
   try {
     log(chalk.bold.blueBright(`DMon Agent`));
     log();
 
-    if (monitorFiles.length === 0) {
+    if (!monitorFiles) {
       monitorFiles = fs.readdirSync(path.join(__dirname, '../monitors/'));
     }
 
@@ -28,16 +28,15 @@ module.exports = function(monitor, options) {
 
     monitorFilesToRun.forEach(m => {
       const mtr = require(`../monitors/${m}`);
-      mtr.init(options);
-      mtr.start();
       const name = mtr.name || m;
-      log(`started monitor: ${yellow(name)}`);
-      // mtr.on('data', (msg) => log(blueBright(`[${name}] ${msg}`)));
       mtr.on('error', (msg) => log(redBright(`[${name}] ${msg}`)));
       mtr.on('failure', (msg) => log(redBright(`[${name}] ${msg}`)));
       mtr.on('info', (msg) => log(blueBright(`[${name}] ${msg}`)));
+      mtr.on('start', (msg) => log(`started monitor: ${yellow(name)}`));
       mtr.on('success', (msg) => log(greenBright(`[${name}] ${msg}`)));
       mtr.on('warning', (msg) => log(yellowBright(`[${name}] ${msg}`)));
+      mtr.init(options);
+      mtr.start();
     });
   } catch (error) {
     log(redBright(error.message));

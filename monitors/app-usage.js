@@ -55,6 +55,7 @@ iohook.init = (options) => {
   cron.schedule("*/5 * * * * *", async () => {
     connected = await isOnline();
   });
+  iohook.emit('start', 'app-usage');
 }
 iohook.name = 'app-usage';
 

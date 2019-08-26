@@ -2,7 +2,7 @@
 const chalk = require('chalk');
 const program = require('commander');
 
-const { editConfig, startMonitor } = require('./commands');
+const { editConfig, getReport, startMonitor } = require('./commands');
 const { getAndVerifyEmail } = require('./middleware');
 
 process.on('uncaughtException', (error) => {
@@ -26,6 +26,11 @@ program
   .description('Start a monitor or all monitors')
   //.action(getAndVerifyEmail)
   .action(startMonitor);
+
+program
+  .command('report <reporter>')
+  .description('Generate a report')
+  .action(getReport);
 
 program
   .command('config [field] [value]')
