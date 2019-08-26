@@ -25,9 +25,11 @@ module.exports = function(reporter, options) {
 
     const rpt = require(`../reporters/${reporterFileToRun}`);
     rpt.on('report', (msg) => {
-      if (msg.type === 'console') {
+      if (msg.output === 'console') {
         const output = table(msg.data, msg.options);
         console.log(output);
+      } else if (msg.output === 'browser') {
+        // TODO
       }
     });
     const name = rpt.name || reporterFileToRun;

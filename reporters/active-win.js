@@ -8,18 +8,21 @@ const emitter = require('events').EventEmitter;
 
 const em = new emitter();
 
-let logFiles;
+let logFiles, logFilesToUse;
 let groupBy = 'name';
 
 em.init = (options) => {
-  //
-}
-em.name = 'active-win';
-em.start = () => {
+  logFilesToUse = options.logs;
+  // -------
   // TODO: throw friendly msg id there is no '../logs/active-win'
   if (!logFiles) {
     logFiles = fs.readdirSync(path.join(__dirname, '../logs/active-win'));
+    logFiles = logFiles.filter(l => typeof logFilesToUse === 'undefined' ||
+      logFilesToUse.map(l => l.toLowerCase()).indexOf(l.toLowerCase()) > -1);
   }
+}
+em.name = 'active-win';
+em.start = () => {
   const options = {
     columnDefault: {
       width: 40
@@ -140,7 +143,7 @@ em.start = () => {
   }
 
   // em.emit('report', {
-  //   type: 'console',
+  //   output: 'console',
   //   data: [
   //     ['0A', '0B', '0C'],
   //     ['1A', '1B', '1C'],

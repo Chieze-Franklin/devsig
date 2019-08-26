@@ -8,18 +8,22 @@ const emitter = require('events').EventEmitter;
 
 const em = new emitter();
 
-let logFiles;
+let logFiles, logFilesToUse;
 let groupBy = 'title';
 
 em.init = (options) => {
-  //
-}
-em.name = 'app-usage';
-em.start = () => {
+  logFilesToUse = options.logs;
+  // -------
   // TODO: throw friendly msg id there is no '../logs/app-usage'
   if (!logFiles) {
     logFiles = fs.readdirSync(path.join(__dirname, '../logs/app-usage'));
+    logFiles = logFiles.filter(l => typeof logFilesToUse === 'undefined' ||
+      logFilesToUse.map(l => l.toLowerCase()).indexOf(l.toLowerCase()) > -1);
   }
+}
+em.name = 'app-usage';
+em.start = () => {
+  
   const options = {
     columnDefault: {
       width: 30
