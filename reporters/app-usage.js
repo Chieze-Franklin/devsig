@@ -13,6 +13,7 @@ let groupBy = 'title';
 
 em.init = (options) => {
   logFilesToUse = options.logs;
+  groupBy = options.groupBy || groupBy;
   // -------
   // TODO: throw friendly msg id there is no '../logs/app-usage'
   if (!logFiles) {

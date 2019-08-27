@@ -29,6 +29,7 @@ program
 
 program
   .command('report <reporter>')
+  .option('--group-by <field>', 'the field or column by which rows are grouped together')
   .option('--logs <logs>', 'list the logs to consider', commaSeparatedList)
   .description('Generate a report')
   .action(getReport);
