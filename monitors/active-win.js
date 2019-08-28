@@ -27,6 +27,9 @@ em.start = () => {
   em.emit('start', 'active-win');
   cron.schedule("*/5 * * * * *", async () => {
     const window = await activeWin();
+    if (!window) {
+      return;
+    }
     if (appsToLog.find(app => window.owner.bundleId.toLowerCase().indexOf(app.toLowerCase()) > -1)) {
       em.emit('data', window);
       if (currentApp !== window.owner.path) {

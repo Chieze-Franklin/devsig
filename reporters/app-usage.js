@@ -27,9 +27,10 @@ em.start = () => {
   
   const options = {
     columnDefault: {
-      width: 30
+      width: 25
     },
-    columnCount: groupBy === 'name' ? 4 : 5,
+    columnCount: groupBy === 'name' ? 4 :
+      groupBy === 'title' ? 5 : 6,
   }
   const stream = createStream(options);
   if (groupBy === 'name') {
@@ -39,10 +40,19 @@ em.start = () => {
       chalk.bold.greenBright('From'),
       chalk.bold.greenBright('To')
     ]);
-  } else {
+  } else if (groupBy === 'title') {
     stream.write([
       chalk.bold.greenBright('Name'),
       chalk.bold.greenBright('Title'),
+      chalk.bold.greenBright('Connection'),
+      chalk.bold.greenBright('From'),
+      chalk.bold.greenBright('To')
+    ]);
+  } else if (groupBy === 'event-type') {
+    stream.write([
+      chalk.bold.greenBright('Name'),
+      chalk.bold.greenBright('Title'),
+      chalk.bold.greenBright('Event Type'),
       chalk.bold.greenBright('Connection'),
       chalk.bold.greenBright('From'),
       chalk.bold.greenBright('To')
@@ -109,7 +119,7 @@ em.start = () => {
             totalConns = 1;
             positiveConns = json.system.network.connected ? 1 : 0;
           }
-        } else {
+        } else if (groupBy === 'title') {
           if (lastEntry.name === json.window.owner.name && lastEntry.title === json.window.title &&
           (date.getTime() - lastEntry.to.getTime()) < 30000) {
             lastEntry.to = date;
@@ -146,6 +156,46 @@ em.start = () => {
             totalConns = 1;
             positiveConns = json.system.network.connected ? 1 : 0;
           }
+        } else if (groupBy === 'event-type') {
+          if (lastEntry.name === json.window.owner.name && lastEntry.title === json.window.title &&
+          lastEntry.eventType.substring(0, 3) === json.event.type.substring(0, 3) &&
+          (date.getTime() - lastEntry.to.getTime()) < 30000) {
+            lastEntry.to = date;
+            totalConns += 1;
+            positiveConns += json.system.network.connected ? 1 : 0;
+          } else {
+            const color = (row % 2) === 0 ? chalk.white : chalk.yellow;
+            row++;
+            stream.write([
+              color(lastEntry.name),
+              color(lastEntry.title),
+              color(lastEntry.eventType),
+              color(`${(positiveConns / totalConns) * 100}%`),
+              color(lastEntry.from),
+              color(lastEntry.to)
+            ]);
+            if ((date.getTime() - lastEntry.to.getTime()) >= 30000) {
+              stream.write([
+                chalk.bgBlue('          '),
+                chalk.bgBlue('          '),
+                chalk.bgBlue('          '),
+                chalk.bgBlue('          '),
+                chalk.bgBlue('          '),
+                chalk.bgBlue('          ')
+              ]);
+            }
+            lastEntry = {
+              name: json.window.owner.name,
+              title: json.window.title,
+              eventType: json.event.type.startsWith('key') ? 'key' : 'mouse',
+              event: json.event.type,
+              connection: json.system.network.connected,
+              from: date,
+              to: date
+            };
+            totalConns = 1;
+            positiveConns = json.system.network.connected ? 1 : 0;
+          }
         }
       }
     }
@@ -159,12 +209,23 @@ em.start = () => {
       color(lastEntry.from),
       color(lastEntry.to)
     ]);
+  } else if (groupBy === 'title') {
+    const color = (row % 2) === 0 ? chalk.white : chalk.yellow;
+    row++;
+    stream.write([
+      color(lastEntry.name),
+      color(lastEntry.title),
+      color(`${(positiveConns / totalConns) * 100}%`),
+      color(lastEntry.from),
+      color(lastEntry.to)
+    ]);
   } else {
     const color = (row % 2) === 0 ? chalk.white : chalk.yellow;
     row++;
     stream.write([
       color(lastEntry.name),
       color(lastEntry.title),
+      color(lastEntry.eventType),
       color(`${(positiveConns / totalConns) * 100}%`),
       color(lastEntry.from),
       color(lastEntry.to)
