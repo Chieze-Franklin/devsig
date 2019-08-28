@@ -3,7 +3,7 @@ const path = require('path');
 
 const defaultConfig = {
   monitor: {
-    apps: [ 'chrome', 'firefox', 'slack', 'vscode' ],
+    apps: [ 'chrome', 'firefox', 'slack', 'vscode', 'zoom' ],
     keyEvents: [ 'keydown', 'keyup' ],
     mouseEvents: [ 'mousedown', 'mouseclick', 'mousedrag' ]
   }
