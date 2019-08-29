@@ -16,7 +16,7 @@ function commaSeparatedList(value, previous) {
 
 program
   .version('0.0.1')
-  .description('DMon Agent');
+  .description('DevSig Agent');
 
 program
   .command('start [monitor]')

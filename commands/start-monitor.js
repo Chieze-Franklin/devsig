@@ -9,7 +9,7 @@ let monitorFiles;
 
 module.exports = function(monitor, options) {
   try {
-    log(chalk.bold.blueBright(`DMon Agent`));
+    log(chalk.bold.blueBright(`DevSig Agent`));
     log();
 
     if (!monitorFiles) {

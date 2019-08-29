@@ -1,21 +1,21 @@
 {
-  "name": "dmon",
+  "name": "devsig",
   "version": "1.0.0",
   "description": "a daemon for collecting work logs from the host machine",
-  "main": "dmon.js",
+  "main": "devsig.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Chieze-Franklin/dmon.git"
+    "url": "git+https://github.com/Chieze-Franklin/devsig.git"
   },
   "author": "",
   "license": "UNLICENSED",
   "bugs": {
-    "url": "https://github.com/Chieze-Franklin/dmon/issues"
+    "url": "https://github.com/Chieze-Franklin/devsig/issues"
   },
-  "homepage": "https://github.com/Chieze-Franklin/dmon#readme",
+  "homepage": "https://github.com/Chieze-Franklin/devsig#readme",
   "dependencies": {
     "active-win": "^5.1.2",
     "chalk": "^2.4.2",
