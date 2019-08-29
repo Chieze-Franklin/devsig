@@ -1,6 +1,6 @@
 {
   "name": "devsig",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "a daemon for collecting work logs from the host machine",
   "main": "devsig.js",
   "scripts": {
@@ -30,5 +30,5 @@
     "table": "^5.4.6"
   },
   "preferGlobal": true,
-  "bin": "./cli.js"
+  "bin": "./devsig.js"
 }
