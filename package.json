@@ -27,6 +27,7 @@
     "n-readlines": "^1.0.0",
     "node-cron": "^2.0.3",
     "simple-node-logger": "^18.12.23",
+    "speedtest-net": "^1.5.1",
     "table": "^5.4.6"
   },
   "preferGlobal": true,
