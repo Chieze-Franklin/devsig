@@ -1,6 +1,6 @@
 {
   "name": "devsig",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "a daemon for collecting work logs from the host machine",
   "main": "devsig.js",
   "scripts": {
@@ -22,7 +22,7 @@
     "chalk": "^2.4.2",
     "commander": "^3.0.0",
     "inquirer": "^6.5.1",
-    "iohook": "file:./local_modules/iohook",
+    "iohook": "file:/local_modules/iohook",
     "is-online": "^8.2.0",
     "mkdirp": "^0.5.1",
     "n-readlines": "^1.0.0",
