@@ -1,0 +1,76 @@
+{
+  "name": "iohook",
+  "version": "0.6.1",
+  "description": "Node.js global keyboard and mouse hook",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wilix-team/iohook.git"
+  },
+  "keywords": [
+    "hook",
+    "electron",
+    "nw.js",
+    "listener",
+    "mousemove",
+    "keypress",
+    "keyup",
+    "global keypress",
+    "shortcut"
+  ],
+  "author": "Aloyan Dmitry",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wilix-team/iohook/issues"
+  },
+  "homepage": "https://github.com/wilix-team/iohook#readme",
+  "dependencies": {
+  },
+  "devDependencies": {
+  },
+  "supportedTargets": [
+    [
+      "electron",
+      "4.0.4",
+      "69"
+    ],
+    [
+      "electron",
+      "5.0.0",
+      "70"
+    ],
+    [
+      "electron",
+      "6.0.0",
+      "73"
+    ],
+    [
+      "node",
+      "8.9.3",
+      "57"
+    ],
+    [
+      "node",
+      "9.2.0",
+      "59"
+    ],
+    [
+      "node",
+      "10.0.0",
+      "64"
+    ],
+    [
+      "node",
+      "11.4.0",
+      "67"
+    ],
+    [
+      "node",
+      "12.0.0",
+      "72"
+    ]
+  ]
+}
