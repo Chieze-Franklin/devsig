@@ -1,6 +1,6 @@
 {
   "name": "devsig",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "a daemon for collecting work logs from the host machine",
   "main": "devsig.js",
   "scripts": {
@@ -28,7 +28,8 @@
     "node-cron": "^2.0.3",
     "simple-node-logger": "^18.12.23",
     "speedtest-net": "^1.5.1",
-    "table": "^5.4.6"
+    "table": "^5.4.6",
+    "update-notifier": "^3.0.1"
   },
   "preferGlobal": true,
   "bin": "./devsig.js"
