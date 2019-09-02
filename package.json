@@ -1,10 +1,10 @@
 {
   "name": "devsig",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "a daemon for collecting work logs from the host machine",
   "main": "devsig.js",
   "scripts": {
-    "postinstall": "echo \"Yessss=======> Post-install ran\"",
+    "postinstall": "cp -R local_modules/iohook node_modules/iohook",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
