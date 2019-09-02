@@ -9,9 +9,6 @@ let monitorFiles;
 
 module.exports = function(monitor, options) {
   try {
-    log(chalk.bold.blueBright(`DevSig Agent`));
-    log();
-
     if (!monitorFiles) {
       monitorFiles = fs.readdirSync(path.join(__dirname, '../monitors/'));
     }

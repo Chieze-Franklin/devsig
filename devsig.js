@@ -1,13 +1,20 @@
 #!/usr/bin/env node
 const chalk = require('chalk');
+const pkg = require('./package.json');
 const program = require('commander');
+const updateNotifier = require('update-notifier');
 
 const { editConfig, getReport, startMonitor } = require('./commands');
-const { getAndVerifyEmail } = require('./middleware');
+const { log } = console;
+
+log(chalk.bold.blueBright(`DevSig Agent`));
+log();
+const notifier = updateNotifier({pkg, updateCheckInterval: 1000 * 60 * 60 * 24}).notify();
+notifier.notify();
 
 process.on('uncaughtException', (error) => {
-  console.log(chalk.redBright(error.message));
-  console.log(error);
+  log(chalk.redBright(error.message));
+  log(error);
 });
 
 function commaSeparatedList(value, previous) {
@@ -15,7 +22,7 @@ function commaSeparatedList(value, previous) {
 }
 
 program
-  .version('0.0.1')
+  .version('1.0.8')
   .description('DevSig Agent');
 
 program
@@ -24,7 +31,6 @@ program
   .option('-k, --key-events <events>', 'list the keyboard events to monitor', commaSeparatedList)
   .option('-m, --mouse-events <events>', 'list the mouse events to monitor', commaSeparatedList)
   .description('Start a monitor or all monitors')
-  //.action(getAndVerifyEmail)
   .action(startMonitor);
 
 program
