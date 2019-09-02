@@ -1,6 +1,6 @@
 {
   "name": "devsig",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "a daemon for collecting work logs from the host machine",
   "main": "devsig.js",
   "scripts": {
