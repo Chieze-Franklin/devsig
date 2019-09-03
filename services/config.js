@@ -1,7 +1,6 @@
-const fs = require('fs')
-const path = require('path');
+const Conf = require('conf');
 
-const defaultConfig = {
+const defaults = {
   monitor: {
     apps: [ 'chrome', 'firefox', 'slack', 'vscode', 'zoom' ],
     keyEvents: [ 'keydown', 'keyup' ],
@@ -9,49 +8,24 @@ const defaultConfig = {
   }
 }
 
-function getSetUserConfig(config) {
-  const filepath = path.join(__dirname, '../.config.json');
-  if (!fs.existsSync(filepath) || config) {
-    var jsonContent = JSON.stringify(config || defaultConfig);
-    fs.writeFileSync(filepath, jsonContent, 'utf8');
-  }
-  const userConfig = require(filepath);
-  return userConfig;
-}
+const config = new Conf({
+  defaults
+});
 
 // ------
 function get(field) {
-  const userConfig = getSetUserConfig();
-
   if (!field) {
-    return userConfig;
+    return config.store;
   }
 
-  const fields = field.split('.').filter(f => !!f);
-  let reducedConfig = userConfig;
-  for (i = 0; i < fields.length; i++) {
-    const f = fields[i];
-    reducedConfig = reducedConfig[f];
-    if (!reducedConfig) {
-      break;
-    }
-  }
-  return reducedConfig;
+  return config.get(field);
 }
 function set(field, value) {
-  const userConfig = getSetUserConfig();
-
   if (value.indexOf(',') > -1) {
     value = value.split(',').filter(v => !!v);
   }
 
-  // not the best way but
-  const fields = field.split('.').filter(f => !!f);
-  if (fields.length === 2 && fields[0] === 'monitor') {
-    userConfig.monitor[fields[1]] = value;
-  }
-
-  getSetUserConfig(userConfig);
+  config.set(field, value);
 }
 
 module.exports = {
