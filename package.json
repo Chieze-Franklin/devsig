@@ -1,6 +1,6 @@
 {
   "name": "devsig",
-  "version": "1.0.9",
+  "version": "1.1.0",
   "description": "a daemon for collecting work logs from the host machine",
   "main": "devsig.js",
   "scripts": {
@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Chieze-Franklin/devsig.git"
+    "url": "git+https://github.com/andela-technology/devsig.git"
   },
   "author": "",
   "license": "UNLICENSED",
   "bugs": {
-    "url": "https://github.com/Chieze-Franklin/devsig/issues"
+    "url": "https://github.com/andela-technology/devsig/issues"
   },
-  "homepage": "https://github.com/Chieze-Franklin/devsig#readme",
+  "homepage": "https://github.com/andela-technology/devsig#readme",
   "dependencies": {
     "active-win": "^5.1.2",
     "chalk": "^2.4.2",
