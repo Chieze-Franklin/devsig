@@ -12,7 +12,10 @@ async function eventHandler(event) {
     return;
   }
   const isSlack = window.owner.bundleId === 'com.tinyspeck.slackmacgap' ||
-    window.title.startsWith('Slack | ');
+    (window.title.startsWith('Slack | ') &&
+    (window.owner.bundleId === 'com.google.Chrome' ||
+    window.owner.bundleId === 'org.mozilla.firefox' ||
+    window.owner.bundleId === 'com.apple.Safari'));
   if (isSlack) {
     const now = new Date();
     if (activeEvent.lastTyped && (now.getTime() - (activeEvent.lastTyped.getTime()) > 30000)) {

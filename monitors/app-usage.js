@@ -12,11 +12,11 @@ let appsToLog, eventsToLog;
 let logger;
 let connected = false;
 
-async function logEvent(msg) {console.log(msg)
+async function logEvent(msg) {
   const window = await activeWin();
   if (!window) {
     return;
-  }
+  }console.log(window)
   if (appsToLog.find(app => window.owner.bundleId.toLowerCase().indexOf(app.toLowerCase()) > -1) &&
   eventsToLog.find(e => e.toLowerCase() === msg.type.toLowerCase())) {
     // TODO: handle scenario where mouse events (esp move, wheel) happen outside bounds of active win
