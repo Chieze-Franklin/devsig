@@ -35,7 +35,7 @@ async function eventHandler(event) {
         });
         activeEvent = {};
       }
-    } else {
+    } else if (type === 'keydown') {
       if (!activeEvent.start) {
         activeEvent.start = now;
         activeEvent.typing = true;
