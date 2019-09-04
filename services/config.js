@@ -9,7 +9,8 @@ const defaults = {
 }
 
 const config = new Conf({
-  defaults
+  defaults,
+  projectName: 'devsig'
 });
 
 // ------
