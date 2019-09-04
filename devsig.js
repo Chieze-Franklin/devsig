@@ -4,10 +4,10 @@ const pkg = require('./package.json');
 const program = require('commander');
 const updateNotifier = require('update-notifier');
 
-const { editConfig, getReport, startMonitor } = require('./commands');
+const { editConfig, getReport, listMonitors, startMonitor } = require('./commands');
 const { log } = console;
 
-log(chalk.bold.blueBright(`DevSig Agent`));
+log(chalk.bold.blueBright(`DevSig Agent ${pkg.version}`));
 log();
 const notifier = updateNotifier({pkg, updateCheckInterval: 1000 * 60 * 60 * 24}).notify();
 notifier.notify();
@@ -32,6 +32,10 @@ program
   .option('-m, --mouse-events <events>', 'list the mouse events to monitor', commaSeparatedList)
   .description('Start a monitor or all monitors')
   .action(startMonitor);
+
+program
+  .command('list')
+  .action(listMonitors);
 
 program
   .command('report <reporter>')
