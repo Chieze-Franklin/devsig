@@ -200,6 +200,9 @@ em.start = () => {
       }
     }
   }
+  // if there's no log file (or log files are empty)
+  // lastEntry may be undefined
+  lastEntry = lastEntry || {};
   if (groupBy === 'name') {
     const color = (row % 2) === 0 ? chalk.white : chalk.yellow;
     row++;
@@ -213,7 +216,7 @@ em.start = () => {
     const color = (row % 2) === 0 ? chalk.white : chalk.yellow;
     row++;
     stream.write([
-      color(lastEntry.name),
+      color(lastEntry.name),//***********
       color(lastEntry.title),
       color(`${(positiveConns / totalConns) * 100}%`),
       color(lastEntry.from),
