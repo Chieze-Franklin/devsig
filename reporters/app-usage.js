@@ -213,7 +213,7 @@ em.start = () => {
     const color = (row % 2) === 0 ? chalk.white : chalk.yellow;
     row++;
     stream.write([
-      color(lastEntry.name),
+      color(lastEntry.name),//*********** and title for slack is Slack - Andela */
       color(lastEntry.title),
       color(`${(positiveConns / totalConns) * 100}%`),
       color(lastEntry.from),
