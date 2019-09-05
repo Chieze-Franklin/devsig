@@ -124,6 +124,9 @@ em.start = () => {
       }
     }
   }
+  // if there's no log file (or log files are empty)
+  // lastEntry may be undefined
+  lastEntry = lastEntry || {};
   if (groupBy === 'name') {
     const color = (row % 2) === 0 ? chalk.white : chalk.yellow;
     row++;

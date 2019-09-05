@@ -12,7 +12,7 @@ async function eventHandler(event) {
     return;
   }
   const isSlack = window.owner.bundleId === 'com.tinyspeck.slackmacgap' ||
-    (window.title.startsWith('Slack | ') &&
+    (window.title.startsWith('Slack ') &&
     (window.owner.bundleId === 'com.google.Chrome' ||
     window.owner.bundleId === 'org.mozilla.firefox' ||
     window.owner.bundleId === 'com.apple.Safari'));
@@ -26,10 +26,21 @@ async function eventHandler(event) {
     keycode === 28 && rawcode === 36 && type === 'keydown');
     if (keyIsEnter) {
       if (activeEvent.typing) {
-        const titleParts = window.title.split('|').map(part => part.trim());
+        // the title can be in one of the following formats:
+        // Slack | general | Andela | 17 new items
+        // Slack - Andela
+        let titleParts = [], workspace, channel;
+        if (window.title.startsWith('Slack | ')) {
+          titleParts = window.title.split('|').map(part => part.trim());
+          workspace = titleParts[2];
+          channel = titleParts[1];
+        } else if (window.title.startsWith('Slack - ')) {
+          titleParts = window.title.split('-').map(part => part.trim());
+          workspace = titleParts[1];
+        }
         logger.info({
-          workspace: titleParts[2],
-          channel: titleParts[1],
+          workspace,
+          channel,
           event: 'typing',
           start: activeEvent.start,
           end: now
