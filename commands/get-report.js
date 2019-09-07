@@ -26,10 +26,12 @@ module.exports = function(reporter, options) {
     const rpt = require(`../reporters/${reporterFileToRun}`);
     rpt.on('report', (msg) => {
       if (msg.output === 'console') {
-        const output = table(msg.data, msg.options);
+        const output = table(msg.data, msg.options); // this should not be here
         console.log(output);
       } else if (msg.output === 'browser') {
         // TODO
+      } else if (msg.output === 'file') {
+        // TODO open the file in default editor
       }
     });
     const name = rpt.name || reporterFileToRun;
