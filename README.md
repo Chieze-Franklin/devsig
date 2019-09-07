@@ -4,8 +4,9 @@ To see a list of commands, run `devsig --help`
 
 ## Getting Started
 - Install globally `npm install --global devsig`
-- Run `devsig start` to get started
-- Continue using your machine as usual while the daemon runs.
+- Run `devsig start` to get the service up and running
+- Continue using your machine as usual while the service runs.
+- Run `devsig report` to generate a report from all the data the service has gathered thus far
 
 ## Monitors
 A monitor is a service that runs in the background and constantly monitors a particular user or system behavior.

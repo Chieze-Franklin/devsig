@@ -1,16 +1,14 @@
 const emitter = require('events').EventEmitter;
 
-const report = require('../services/report');
-
 const em = new emitter();
-let reporter;
 
 em.name = 'slack';
-em.init = (options) => {
-  reporter = report.getReporter('slack');
-}
+em.init = (options) => {}
 em.start = () => {
-  reporter.text('16 messages per day')
+  em.emit('report', {
+    output: 'file',
+    data: 'slack:\n16 messages per day\naverage of 14 unread messages'
+  });
 }
 
 module.exports = em;

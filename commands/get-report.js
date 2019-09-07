@@ -1,5 +1,6 @@
 const chalk = require('chalk');
 const fs = require('fs');
+const mkdirp = require('mkdirp');
 const path = require('path');
 const { table } = require('table');
 
@@ -31,6 +32,9 @@ module.exports = function(reporter, options) {
       } else if (msg.output === 'browser') {
         // TODO
       } else if (msg.output === 'file') {
+        // create report directory
+        mkdirp.sync(path.join(__dirname, `../reports`));
+        fs.appendFile(__dirname, `../reports/${options.file || 'report.txt'}`, msg.data + '\n\n', (error) => {});
         // TODO open the file in default editor
       }
     });

@@ -1,16 +1,14 @@
 const emitter = require('events').EventEmitter;
 
-const report = require('../services/report');
-
 const em = new emitter();
-let reporter;
 
 em.name = 'jira';
-em.init = (options) => {
-  reporter = report.getReporter('jira');
-}
+em.init = (options) => {}
 em.start = () => {
-  reporter.text('8 comments per day')
+  em.emit('report', {
+    output: 'file',
+    data: 'jira:\n8 comments per day'
+  });
 }
 
 module.exports = em;

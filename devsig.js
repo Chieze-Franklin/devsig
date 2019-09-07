@@ -38,7 +38,8 @@ program
   .action(listMonitors);
 
 program
-  .command('report <reporter>')
+  .command('report [reporter]')
+  .option('-f, --file <name>', 'the name of the file to which the report is to be written')
   .option('--group-by <field>', 'the field or column by which rows are grouped together')
   .option('--logs <logs>', 'list the logs to consider', commaSeparatedList)
   .description('Generate a report')
