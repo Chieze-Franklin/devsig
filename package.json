@@ -1,6 +1,6 @@
 {
   "name": "devsig",
-  "version": "1.1.5-alpha-3",
+  "version": "1.1.5-alpha-4",
   "description": "a daemon for collecting work logs from the host machine",
   "main": "devsig.js",
   "scripts": {
@@ -17,6 +17,12 @@
     "url": "https://github.com/andela-technology/devsig/issues"
   },
   "homepage": "https://github.com/andela-technology/devsig#readme",
+  "keywords": [
+    "devsig",
+    "performance",
+    "monitor",
+    "report"
+  ],
   "dependencies": {
     "active-win": "^5.1.2",
     "asciichart": "^1.5.9",

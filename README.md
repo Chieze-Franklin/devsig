@@ -15,9 +15,14 @@ as you work on your machine.
 
 ## Getting Started
 - Install globally `npm install --global devsig`
-- Run `devsig start` to get the service up and running
+- Run `devsig start` to get the service up and running.
 - Continue using your machine as usual while the service runs.
-- Run `devsig report` to generate a report from all the data the service has gathered thus far
+- Run `devsig report` to generate a report from all the data the service has gathered thus far.
+
+## Getting Help
+- Run `devsig --help` to see all available commands. The `--help` flag also gives you info about each command. For instance, to find out more about the `devsig start` command, run `devsig start --help`.
+- If you encounter any runtime error (like `Cannot find module 'iohook'`), stop the service, run `devsig fix`, restart the service.
+- You can always contact the LearnTech team for more assistance.
 
 ## How DevSig Works
 
