@@ -9,7 +9,7 @@ const { log } = console;
 const { blue, blueBright, green, greenBright, red, redBright, yellow, yellowBright } = chalk;
 
 let reporterFiles;
-const sessionName = dayjs().format('YYYY-MM-DDTHH-mm-ss.SSS-A') + '.txt';
+const sessionName = dayjs().format('YYYY-MM-DDTHH-mm-ss.SSS') + '.txt';
 
 module.exports = function(reporter, options) {
   try {
@@ -43,7 +43,20 @@ module.exports = function(reporter, options) {
           log();
           // create report directory
           mkdirp.sync(path.join(__dirname, `../reports`));
-          fs.appendFile(path.join(__dirname, `../reports/${options.file || sessionName}`), msg.data + '\n', (error) => {});
+          let { data } = msg;
+          if (msg.replace) {
+            // the story here:
+            // msg.data may contain formating text that should be there when we are logging to the console
+            // but removed when writing to file
+            // you specify these in msg.replace where each key is the text to remove and its corresponding
+            // value is the replace text
+            // we use a regular expression with flag /g so every instance of the text is replaced
+            // (instead of just the 1st instance)
+            // but we must first change '[' to '\\[' so the regex doesn't cry
+            const keys = Object.keys(msg.replace);
+            keys.forEach(key => data = data.replace(new RegExp(key.replace('[', '\\['), 'g'), msg.replace[key]));
+          }
+          fs.appendFile(path.join(__dirname, `../reports/${options.file || sessionName}`), data + '\n', (error) => {});
           // open the file in default program
           open(path.join(__dirname, `../reports/${options.file || sessionName}`));
         }

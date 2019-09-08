@@ -31,4 +31,8 @@ A monitor is a service that runs in the background and constantly monitors a par
 
 Most monitors keep a log of the activities they monitor.
 
+You can exclude monitors in your config.
+
+## Logs
+
 ## Reporters

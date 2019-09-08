@@ -80,6 +80,11 @@ ansi-styles@^3.2.0, ansi-styles@^3.2.1:
   dependencies:
     color-convert "^1.9.0"
 
+asciichart@^1.5.9:
+  version "1.5.9"
+  resolved "https://registry.yarnpkg.com/asciichart/-/asciichart-1.5.9.tgz#09707b13e2d4cb71b13dd1866fffcd15f76c005c"
+  integrity sha512-1q/HY2qSQ4WvTryixibCX37ST2nqSYnUalVX4HtZtImb8DWRnoGB93hvPkpUypNILLosfMcceICSDYgFCeC2iw==
+
 astral-regex@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/astral-regex/-/astral-regex-1.0.0.tgz#6c8c3fb827dd43ee3918f27b82782ab7658a6fd9"
