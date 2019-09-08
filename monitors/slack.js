@@ -27,21 +27,23 @@ async function eventHandler(event) {
     if (keyIsEnter) {
       if (activeEvent.typing) {
         // the title can be in one of the following formats:
-        // Slack | general | Andela | 17 new items
+        // Slack | general | Andela | 17 new items // the last part may be missing
         // Slack - Andela
-        let titleParts = [], workspace, channel;
+        let titleParts = [], workspace, channel, unread;
         if (window.title.startsWith('Slack | ')) {
           titleParts = window.title.split('|').map(part => part.trim());
           workspace = titleParts[2];
           channel = titleParts[1];
+          unread = titleParts[3] ? parseInt(titleParts[3].split(' ')[0]) : undefined;
         } else if (window.title.startsWith('Slack - ')) {
           titleParts = window.title.split('-').map(part => part.trim());
           workspace = titleParts[1];
         }
         logger.info({
+          event: 'typing',
           workspace,
           channel,
-          event: 'typing',
+          unread,
           start: activeEvent.start,
           end: now
         });
