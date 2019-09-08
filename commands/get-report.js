@@ -4,7 +4,6 @@ const fs = require('fs');
 const mkdirp = require('mkdirp');
 const open = require('open');
 const path = require('path');
-const { table } = require('table');
 
 const { log } = console;
 const { blue, blueBright, green, greenBright, red, redBright, yellow, yellowBright } = chalk;
@@ -32,15 +31,19 @@ module.exports = function(reporter, options) {
       const rpt = require(`../reporters/${r}`);
       rpt.on('report', (msg) => {
         if (msg.output === 'console') {
-          const output = table(msg.data, msg.options); // this should not be here
-          console.log(output);
+          log(msg.data);
+          log();
         } else if (msg.output === 'browser') {
+          log(`Go to ${blueBright(msg.data)}`);
+          log();
           // open the url in default program
           open(msg.data);
         } else if (msg.output === 'file') {
+          log(msg.data);
+          log();
           // create report directory
           mkdirp.sync(path.join(__dirname, `../reports`));
-          fs.appendFile(path.join(__dirname, `../reports/${options.file || sessionName}`), msg.data + '\n\n', (error) => {});
+          fs.appendFile(path.join(__dirname, `../reports/${options.file || sessionName}`), msg.data + '\n', (error) => {});
           // open the file in default program
           open(path.join(__dirname, `../reports/${options.file || sessionName}`));
         }
