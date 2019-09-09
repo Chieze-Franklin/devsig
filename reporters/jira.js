@@ -14,10 +14,7 @@ const { blue, blueBright, green, greenBright, red, redBright, yellow, yellowBrig
 em.name = 'jira';
 em.init = (options) => {}
 em.start = () => {
-  let data = '__________Jira__________\n';
-
-  // comments per day
-  data += 'Comments per day:\n';
+  em.emit('open', 'jira');
   const values = [];
   let totalComments = 0;
   // ensure folder exists to avoid exceptions
@@ -41,14 +38,20 @@ em.start = () => {
       }
     }
   }
+  let data = chalk.bold.blueBright('__________Jira__________') + '\n\n';
+  data += blueBright('Comments per day:') + '\n';
   data += green(asciichart.plot(values.reverse(), { height: 20 })) + '\n';
-  data += `Total comments for the past 30 days: ${blueBright(totalComments)}. Average comments/day: ${blueBright(totalComments /30)}`;
+  data += `Total comments for the past 30 days: ${greenBright(totalComments)}. Average comment/day: ${greenBright(totalComments /30)}`;
+  em.emit('close', 'jira');
   em.emit('report', {
     output: 'file',
     data,
     replace: {
+      '[1m': '',
+      '[22m': '',
       '[32m': '',
       '[39m': '',
+      '[92m': '',
       '[94m': ''
     }
   });
