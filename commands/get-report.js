@@ -27,6 +27,7 @@ module.exports = function(reporter, options) {
       throw new Error(`Cannot find reporter '${reporter}'`);
     }
 
+    let fileHandles = 0;
     reportersFileToRun.forEach(r => {
       const rpt = require(`../reporters/${r}`);
       rpt.on('report', (msg) => {
@@ -56,12 +57,28 @@ module.exports = function(reporter, options) {
             const keys = Object.keys(msg.replace);
             keys.forEach(key => data = data.replace(new RegExp(key.replace('[', '\\['), 'g'), msg.replace[key]));
           }
-          fs.appendFile(path.join(__dirname, `../reports/${options.file || sessionName}`), data + '\n', (error) => {});
+          fs.appendFile(path.join(__dirname, `../reports/${options.file || sessionName}`), data + '\n\n', (error) => {});
           // open the file in default program
-          open(path.join(__dirname, `../reports/${options.file || sessionName}`));
+          //
+          // What's happening here:
+          // Multiple reporters could be generating reports to be written to this file
+          // I want to ensure the file isn't opened until all reporters are done writing to it
+          // To do this we have a variable fileHandles that holds the number of reporters
+          // still writing to this file. The number is increased by 1 when the 'open' event is handled
+          // and reduced by 1 when the 'close' event is handled.
+          // We also wait 1000ms before checking the value of fileHandles to be sure any 'open' or
+          // 'close' event that ought to be handled has been handled.
+          setTimeout(()=>{
+            if (fileHandles === 0) {
+              open(path.join(__dirname, `../reports/${options.file || sessionName}`));
+            }
+          }, 1000);
         }
       });
       const name = rpt.name || r;
+      rpt.on('close', (msg) => fileHandles--);
+      rpt.on('open', (msg) => fileHandles++);
+
       rpt.on('error', (msg) => log(redBright(`[${name}] ${msg}`)));
       rpt.on('failure', (msg) => log(redBright(`[${name}] ${msg}`)));
       rpt.on('info', (msg) => log(blueBright(`[${name}] ${msg}`)));
