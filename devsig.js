@@ -4,7 +4,7 @@ const pkg = require('./package.json');
 const program = require('commander');
 const updateNotifier = require('update-notifier');
 
-const { editConfig, getReport, listMonitors, startMonitor } = require('./commands');
+const { editConfig, getReport, fix, listMonitors, startMonitor } = require('./commands');
 const { log } = console;
 
 log(chalk.bold.blueBright(`DevSig Agent ${pkg.version}`));
@@ -49,6 +49,11 @@ program
   .command('config [field] [value]')
   .description('Get or set the value of a config field')
   .action(editConfig);
+
+program
+  .command('fix')
+  .description('Fixes issues like "Cannot find module \'iohook\'"')
+  .action(fix);
 
 program.parse(process.argv);
   

@@ -25,6 +25,7 @@ as you work on your machine.
 - You can always contact the LearnTech team for more assistance.
 
 ## How DevSig Works
+*To be documented*
 
 ## Monitors
 A monitor is a service that runs in the background and constantly monitors a particular user or system behavior.
@@ -39,5 +40,7 @@ Most monitors keep a log of the activities they monitor.
 You can exclude monitors in your config.
 
 ## Logs
+*To be documented*
 
 ## Reporters
+*To be documented*
