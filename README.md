@@ -17,6 +17,7 @@ as you work on your machine.
 - Install globally `npm install --global devsig`
 - Run `devsig start` to get the service up and running.
 - Continue using your machine as usual while the service runs.
+- To stop the service, use the `Ctrl + C` combination.
 - Run `devsig report` to generate a report from all the data the service has gathered thus far.
 
 ## Getting Help
@@ -24,23 +25,33 @@ as you work on your machine.
 - If you encounter any runtime error (like `Cannot find module 'iohook'`), stop the service, run `devsig fix`, restart the service.
 - You can always contact the LearnTech team for more assistance.
 
-## How DevSig Works
-*To be documented*
+## Advanced Stuff
 
-## Monitors
-A monitor is a service that runs in the background and constantly monitors a particular user or system behavior.
+#### How DevSig Works
+The DevSig service continually observes relevant interactions (like the use of Slack) and continually creates logs of these observations on the machine on which it is running. **These logs are not sent to any party or any remote repository.**
+
+Below is what a log looks like:
+
+![Jira logs](https://user-images.githubusercontent.com/6097630/64611794-276fbe80-d3ca-11e9-927f-18063abb5c4e.png)
+
+Whenever you run `devsig report` DevSig takes a look at the log files currently on the machine and attempts to generate some sort of *summary* that you can share with anyone. DevSig ensures no specific data (like who you chat with) is captured in the reports. Just like with the logs, **these reports are never sent to any party or remote repository.**
+
+Below is what a report looks like:
+
+![Jira and Slack reports](https://user-images.githubusercontent.com/6097630/64611640-d95abb00-d3c9-11e9-974f-0c3c1fc0cda1.png)
+
+#### Monitors
+A monitor is a service that runs in the background, continually observes relevant interactions (like the use of Slack), and may create logs of these observations on the local machine.
 
 - To see all monitors, run `devsig list`
 - To start all monitors, run `devsig start`
 - To start a particular monitor, run `devsig start {monitor}`
     - For instance, to run the Slack monitor, run `devsig start slack`
 
-Most monitors keep a log of the activities they monitor.
-
 You can exclude monitors in your config.
 
-## Logs
+#### Logs
 *To be documented*
 
-## Reporters
+#### Reporters
 *To be documented*
