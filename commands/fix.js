@@ -4,7 +4,7 @@ const path = require('path');
 module.exports = function() {
   try {
     // fix Cannot find module 'iohook'
-    exec('npm run postinstall', {
+    exec('npm run fix', {
         cwd: path.join(__dirname, '../')
       },
       (error) => {});
