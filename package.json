@@ -1,10 +1,11 @@
 {
   "name": "devsig",
-  "version": "1.1.5-alpha-4",
+  "version": "1.1.5-beta-5",
   "description": "a daemon for collecting work logs from the host machine",
   "main": "devsig.js",
   "scripts": {
-    "postinstall": "cp -R local_modules/iohook node_modules/iohook",
+    "fix": "node fix",
+    "postinstall": "npm run fix",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -30,12 +31,14 @@
     "commander": "^3.0.0",
     "conf": "^5.0.0",
     "dayjs": "^1.8.16",
+    "fs-extra": "^8.1.0",
     "inquirer": "^6.5.1",
     "is-online": "^8.2.0",
     "mkdirp": "^0.5.1",
     "n-readlines": "^1.0.0",
     "node-cron": "^2.0.3",
     "open": "^6.4.0",
+    "rimraf": "^3.0.0",
     "simple-node-logger": "^18.12.23",
     "speedtest-net": "^1.5.1",
     "table": "^5.4.6",

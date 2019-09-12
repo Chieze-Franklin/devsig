@@ -26,6 +26,7 @@ em.start = () => {
     const logsForDate = logs.filter(l => l.startsWith(date));
     messages[i] = 0;
     unread[i] = 0;
+    let unreadCount = 0;
     for (let j = 0; j < logsForDate.length; j++) {
       const liner = new lineByLine(path.join(__dirname, `../logs/${em.name}/${logsForDate[j]}`));
       let line;
@@ -34,29 +35,37 @@ em.start = () => {
         if (!(lineStr.trim())) {
           continue;
         }
+        
+        const jsonStr = lineStr.substring(lineStr.indexOf(' INFO  ') + 7, lineStr.lastIndexOf('}') + 1);
+        const json = JSON.parse(jsonStr);
+        if (json.workspace.toLowerCase() !== 'andela') {
+          continue;
+        }
         // messages
         messages[i] += 1;
         totalMessages++;
 
         // unread
-        const jsonStr = lineStr.substring(lineStr.indexOf(' INFO  ') + 7, lineStr.lastIndexOf('}') + 1);
-        const json = JSON.parse(jsonStr);
-        if (json.unread) {
+        if (typeof json.unread !== 'undefined') {
           unread[i] += json.unread;
-          totalUnread += json.unread;
+          unreadCount++;
         }
       }
     }
+    if (unreadCount > 0) {
+      unread[i] = unread[i] / unreadCount;
+      totalUnread += unread[i];
+    }
   }
   let data = chalk.bold.blueBright('__________Slack__________') + '\n\n';
-  data += blueBright('Messages per day:') + '\n';
+  data += blueBright('Messages:') + '\n';
   data += green(asciichart.plot(messages.reverse(), { height: 20 })) + '\n';
-  data += `Total messages for the past 30 days: ${greenBright(totalMessages)}. Average message/day: ${greenBright(totalMessages /30)}\n\n`;
+  data += `Total messages for the past 30 days: ${greenBright(totalMessages)}. Average messages/day: ${greenBright(totalMessages /30)}\n\n`;
 
 
-  data += blueBright('Unread messages per day:') + '\n';
+  data += blueBright('Average unread messages:') + '\n';
   data += green(asciichart.plot(unread.reverse(), { height: 20 })) + '\n';
-  data += `Total unread messages for the past 30 days: ${greenBright(totalUnread)}. Average unread message/day: ${greenBright(totalUnread /30)}`;
+  data += `Average unread messages/day for the past 30 days: ${greenBright(totalUnread /30)}`;
   em.emit('close', 'slack');
   em.emit('report', {
     output: 'file',
