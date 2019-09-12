@@ -39,9 +39,9 @@ em.start = () => {
     }
   }
   let data = chalk.bold.blueBright('__________Jira__________') + '\n\n';
-  data += blueBright('Comments per day:') + '\n';
+  data += blueBright('Comments:') + '\n';
   data += green(asciichart.plot(values.reverse(), { height: 20 })) + '\n';
-  data += `Total comments for the past 30 days: ${greenBright(totalComments)}. Average comment/day: ${greenBright(totalComments /30)}`;
+  data += `Total comments for the past 30 days: ${greenBright(totalComments)}. Average comments/day: ${greenBright(totalComments /30)}`;
   em.emit('close', 'jira');
   em.emit('report', {
     output: 'file',

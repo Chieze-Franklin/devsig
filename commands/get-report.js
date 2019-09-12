@@ -9,7 +9,7 @@ const { log } = console;
 const { blue, blueBright, green, greenBright, red, redBright, yellow, yellowBright } = chalk;
 
 let reporterFiles;
-const sessionName = dayjs().format('YYYY-MM-DDTHH-mm-ss.SSS') + '.txt';
+const sessionName = dayjs().format('YYYY.MM.DD-HH.mm.ss.SSS') + '.txt';
 
 module.exports = function(reporter, options) {
   try {
