@@ -1,10 +1,17 @@
 const Conf = require('conf');
 
 const defaults = {
-  monitor: {
-    apps: [ 'chrome', 'firefox', 'slack', 'vscode', 'zoom' ],
-    keyEvents: [ 'keydown', 'keyup' ],
-    mouseEvents: [ 'mousedown', 'mouseclick', 'mousedrag' ]
+  monitors: {
+    exclude: []
+  },
+  reporters: {
+    exclude: []
+  },
+  user: {
+    email: ''
+  },
+  manager: {
+    email: ''
   }
 }
 
@@ -15,6 +22,9 @@ const config = new Conf({
 
 // ------
 function get(field) {
+  if (config.store.monitor) { // remove deprecated field
+    config.store = { ...config.store, monitor: undefined }
+  }
   if (!field) {
     return config.store;
   }
