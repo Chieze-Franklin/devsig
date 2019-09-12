@@ -1,10 +1,10 @@
 {
   "name": "devsig",
-  "version": "1.1.5-beta-6",
+  "version": "1.1.5-beta",
   "description": "a daemon for collecting work logs from the host machine",
   "main": "devsig.js",
   "scripts": {
-    "fix": "node fix",
+    "fix": "cp -R local_modules/iohook node_modules",
     "postinstall": "npm run fix",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
