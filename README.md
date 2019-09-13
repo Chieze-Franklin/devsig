@@ -1,4 +1,8 @@
 # DevSig
+
+![Node 8](https://img.shields.io/badge/Node-8-brightgreen)
+![Node 10](https://img.shields.io/badge/Node-10-brightgreen)
+
 DevSig observes relevant habits as you interact with your machine. These habits include
 how often you type on Slack, how often you type on Jira, how often you have your cameras on when on a Zoom call.
 The purpose of this is to better understand engineers' habits with the end goal of being able to recommend
