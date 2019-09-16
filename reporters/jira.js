@@ -16,7 +16,6 @@ em.init = (options) => {}
 em.start = () => {
   em.emit('open', 'jira');
   const values = [];
-  let totalComments = 0;
   // ensure folder exists to avoid exceptions
   mkdirp.sync(path.join(__dirname, `../logs/${em.name}`));
   const logs = fs.readdirSync(path.join(__dirname, `../logs/${em.name}`));
@@ -34,13 +33,18 @@ em.start = () => {
           continue;
         }
         values[i] += 1;
-        totalComments++;
       }
     }
   }
+
+  function arraySum(sum, num) {
+    return sum + num;
+  }
+
   let data = chalk.bold.blueBright('__________Jira__________') + '\n\n';
   data += blueBright('Comments:') + '\n';
   data += green(asciichart.plot(values.reverse(), { height: 20 })) + '\n';
+  const totalComments = values.reduce(arraySum);
   data += `Total comments for the past 30 days: ${greenBright(totalComments)}. Average comments/day: ${greenBright(totalComments /30)}`;
   em.emit('close', 'jira');
   em.emit('report', {
