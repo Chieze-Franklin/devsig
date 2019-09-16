@@ -1,6 +1,6 @@
 {
   "name": "devsig",
-  "version": "1.1.5",
+  "version": "1.1.6-alpha-1",
   "description": "a daemon for collecting work logs from the host machine",
   "main": "devsig.js",
   "scripts": {
@@ -33,6 +33,7 @@
     "dayjs": "^1.8.16",
     "fs-extra": "^8.1.0",
     "inquirer": "^6.5.1",
+    "is-camera-on": "^2.0.0",
     "is-online": "^8.2.0",
     "mkdirp": "^0.5.1",
     "n-readlines": "^1.0.0",
@@ -41,8 +42,7 @@
     "rimraf": "^3.0.0",
     "simple-node-logger": "^18.12.23",
     "speedtest-net": "^1.5.1",
-    "table": "^5.4.6",
-    "update-notifier": "^3.0.1"
+    "table": "^5.4.6"
   },
   "preferGlobal": true,
   "bin": "./devsig.js"
