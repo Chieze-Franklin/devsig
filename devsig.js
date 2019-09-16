@@ -2,15 +2,12 @@
 const chalk = require('chalk');
 const pkg = require('./package.json');
 const program = require('commander');
-const updateNotifier = require('update-notifier');
 
 const { editConfig, getReport, fix, listMonitors, startMonitor } = require('./commands');
 const { log } = console;
 
 log(chalk.bold.blueBright(`DevSig Agent ${pkg.version}`));
 log();
-const notifier = updateNotifier({pkg, updateCheckInterval: 1000 * 60 * 60 * 24}).notify();
-notifier.notify();
 
 process.on('uncaughtException', (error) => {
   log(chalk.redBright(error.message));
