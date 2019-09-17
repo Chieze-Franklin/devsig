@@ -68,9 +68,10 @@ module.exports = function(reporter, options) {
           // and reduced by 1 when the 'close' event is handled.
           // We also wait 1000ms before checking the value of fileHandles to be sure any 'open' or
           // 'close' event that ought to be handled has been handled.
-          setTimeout(()=>{
+          setTimeout(async ()=>{
             if (fileHandles === 0) {
-              open(path.join(__dirname, `../reports/${options.file || sessionName}`));
+              await open(path.join(__dirname, `../reports/${options.file || sessionName}`));
+              process.exit(); // for some reason I now have to manually call this.. was exiting by itself like 2 minutes aga :confused:
             }
           }, 1000);
         }

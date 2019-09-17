@@ -7,6 +7,8 @@ const mkdirp = require('mkdirp');
 const lineByLine = require('n-readlines');
 const path = require('path');
 
+const log = require('../services/log');
+
 const em = new emitter();
 
 const { blue, blueBright, green, greenBright, red, redBright, yellow, yellowBright } = chalk;
