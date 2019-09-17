@@ -22,21 +22,25 @@ const config = new Conf({
 
 // ------
 function get(field) {
-  if (config.store.monitor) { // remove deprecated field
-    config.store = { ...config.store, monitor: undefined }
-  }
-  if (!field) {
-    return config.store;
-  }
-
-  return config.get(field);
+  try {
+    if (config.store.monitor) { // remove deprecated field
+      config.store = { ...config.store, monitor: undefined }
+    }
+    if (!field) {
+      return config.store;
+    }
+  
+    return config.get(field);
+  } catch (error) {}
 }
 function set(field, value) {
-  if (value.indexOf(',') > -1) {
-    value = value.split(',').filter(v => !!v);
-  }
-
-  config.set(field, value);
+  try {
+    if (value.indexOf(',') > -1) {
+      value = value.split(',').filter(v => !!v);
+    }
+  
+    config.set(field, value);
+  } catch (error) {}
 }
 
 module.exports = {
