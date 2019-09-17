@@ -33,7 +33,7 @@ em.start = () => {
         });
       }
     } catch(error) {
-      errLogger.error(error);
+      errLogger.info(error); // errLogger.error(...) throws an exception (can you believe that?)
     }
   });
 }

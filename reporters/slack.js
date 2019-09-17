@@ -43,7 +43,7 @@ em.start = () => {
           
           const jsonStr = lineStr.substring(lineStr.indexOf(' INFO  ') + 7, lineStr.lastIndexOf('}') + 1);
           const json = JSON.parse(jsonStr);
-          if (json.workspace.toLowerCase() !== 'andela') {
+          if (!json.workspace || json.workspace.toLowerCase() !== 'andela') {
             continue;
           }
           // messages
@@ -90,7 +90,8 @@ em.start = () => {
       }
     });
   } catch (error) {
-    errLogger.error(error);
+    errLogger.info(error); // errLogger.error(...) throws an exception (can you believe that?)
+    em.emit('close', 'slack');
   }
 }
 
