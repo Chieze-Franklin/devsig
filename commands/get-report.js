@@ -5,6 +5,8 @@ const mkdirp = require('mkdirp');
 const open = require('open');
 const path = require('path');
 
+const { emailIsPresent, appTokenIsPresent } = require('../services/utils');
+
 const { log } = console;
 const { blue, blueBright, green, greenBright, red, redBright, yellow, yellowBright } = chalk;
 
@@ -13,6 +15,10 @@ const sessionName = dayjs().format('YYYY.MM.DD-HH.mm.ss.SSS') + '.txt';
 
 module.exports = function(reporter, options) {
   try {
+    if (!emailIsPresent() || !appTokenIsPresent()) {
+      return;
+    }
+
     if (!reporterFiles) {
       reporterFiles = fs.readdirSync(path.join(__dirname, '../reporters/'));
     }
@@ -34,6 +40,11 @@ module.exports = function(reporter, options) {
         if (msg.output === 'console') {
           log(msg.data);
           log();
+          setInterval(async ()=>{
+            if (fileHandles === 0) {
+              process.exit(); // calling this manually because 'simple-node-logger' keeps the process alive
+            }
+          }, 1000);
         } else if (msg.output === 'browser') {
           log(`Go to ${blueBright(msg.data)}`);
           log();
@@ -65,25 +76,26 @@ module.exports = function(reporter, options) {
           // I want to ensure the file isn't opened until all reporters are done writing to it
           // To do this we have a variable fileHandles that holds the number of reporters
           // still writing to this file. The number is increased by 1 when the 'open' event is handled
-          // and reduced by 1 when the 'close' event is handled.
+          // and reduced by 1 when the 'end' event is handled.
           // We also wait 1000ms before checking the value of fileHandles to be sure any 'open' or
-          // 'close' event that ought to be handled has been handled.
+          // 'end' event that ought to be handled has been handled.
           setTimeout(async ()=>{
             if (fileHandles === 0) {
               await open(path.join(__dirname, `../reports/${options.file || sessionName}`));
-              process.exit(); // for some reason I now have to manually call this.. was exiting by itself like 2 minutes aga :confused:
+              process.exit(); // calling this manually because 'simple-node-logger' keeps the process alive
             }
           }, 1000);
         }
       });
       const name = rpt.name || r;
-      rpt.on('close', (msg) => fileHandles--);
-      rpt.on('open', (msg) => fileHandles++);
-
+      rpt.on('end', (msg) => fileHandles--);
       rpt.on('error', (msg) => log(redBright(`[${name}] ${msg}`)));
       rpt.on('failure', (msg) => log(redBright(`[${name}] ${msg}`)));
       rpt.on('info', (msg) => log(blueBright(`[${name}] ${msg}`)));
-      rpt.on('start', (msg) => log(`started monitor: ${yellow(name)}`));
+      rpt.on('start', (msg) => {
+        log(`started monitor: ${yellow(name)}`);
+        fileHandles++
+      });
       rpt.on('success', (msg) => log(greenBright(`[${name}] ${msg}`)));
       rpt.on('warning', (msg) => log(yellowBright(`[${name}] ${msg}`)));
       rpt.init(options);

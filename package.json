@@ -31,6 +31,7 @@
     "commander": "^3.0.0",
     "conf": "^5.0.0",
     "dayjs": "^1.8.16",
+    "devsig-client": "^0.2.3",
     "fs-extra": "^8.1.0",
     "inquirer": "^6.5.1",
     "is-camera-on": "^2.0.0",

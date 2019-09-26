@@ -4,6 +4,7 @@ const pkg = require('./package.json');
 const program = require('commander');
 
 const { editConfig, getReport, fix, listMonitors, startMonitor } = require('./commands');
+const { emailIsPresent, appTokenIsPresent } = require('./services/utils');
 const { log } = console;
 
 log(chalk.bold.blueBright(`DevSig Agent ${pkg.version}`));
@@ -13,6 +14,10 @@ process.on('uncaughtException', (error) => {
   log(chalk.redBright(error.message));
   log(error);
 });
+
+if (!emailIsPresent() || !appTokenIsPresent()) {
+  process.exit();
+}
 
 function commaSeparatedList(value, previous) {
   return value.split(',');
@@ -37,8 +42,8 @@ program
 program
   .command('report [reporter]')
   .option('-f, --file <name>', 'the name of the file to which the report is to be written')
-  .option('--group-by <field>', 'the field or column by which rows are grouped together')
   .option('--logs <logs>', 'list the logs to consider', commaSeparatedList)
+  .option('--push', 'push the report to the server')
   .description('Generate a report')
   .action(getReport);
 
