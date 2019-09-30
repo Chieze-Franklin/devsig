@@ -1,6 +1,9 @@
 const Conf = require('conf');
 
 const defaults = {
+  app: {
+    token: ''
+  },
   monitors: {
     exclude: []
   },
