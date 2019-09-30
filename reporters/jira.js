@@ -67,7 +67,7 @@ em.start = () => {
     function serverResponse(error, result) {
       numOfResponses++;
       if (numOfResponses >= expectedNumOfRes) {
-        em.emit('end', 'call');
+        em.emit('end', 'jira');
       }
     }
 
