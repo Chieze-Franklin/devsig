@@ -1,0 +1,1 @@
+const asciichart = require ('asciichart');
