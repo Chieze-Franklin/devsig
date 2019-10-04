@@ -19,6 +19,7 @@ as you work on your machine.
 
 ## Getting Started
 - Install globally `npm install --global devsig`
+- If you run into `EACCES permissions error` during installation, follow this guide to resolve it: https://docs.npmjs.com/resolving-eacces-permissions-errors-when-installing-packages-globally
 - Run `devsig start` to get the service up and running.
 - Continue using your machine as usual while the service runs.
 - To stop the service, use the `Ctrl + C` combination.
