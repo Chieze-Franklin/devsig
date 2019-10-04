@@ -1,5 +1,5 @@
-const getAndVerifyEmail = require('./get-verify-email');
+const verifyUser = require('./verify-user');
 
 module.exports = {
-  getAndVerifyEmail
+  verifyUser
 };
