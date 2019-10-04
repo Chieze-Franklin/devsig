@@ -30,7 +30,7 @@ em.start = () => {
   try {
     em.emit('start', 'jira');
     const values = [];
-    const numOfDays = 5; // number of days to consider
+    const numOfDays = 15; // number of days to consider
     let numOfResponses = 0; // number of responses from the server
     const expectedNumOfRes = 1 * numOfDays; // expected number of responses from the server
     // ensure folder exists to avoid exceptions
