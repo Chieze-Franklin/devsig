@@ -3,8 +3,8 @@ const chalk = require('chalk');
 const pkg = require('./package.json');
 const program = require('commander');
 
+const { verifyUser } = require('./middleware');
 const { editConfig, getReport, fix, listMonitors, startMonitor } = require('./commands');
-const { emailIsPresent, appTokenIsPresent } = require('./services/utils');
 const { log } = console;
 
 log(chalk.bold.blueBright(`DevSig Agent ${pkg.version}`));
@@ -14,10 +14,6 @@ process.on('uncaughtException', (error) => {
   log(chalk.redBright(error.message));
   log(error);
 });
-
-if (!emailIsPresent() || !appTokenIsPresent()) {
-  process.exit();
-}
 
 function commaSeparatedList(value, previous) {
   return value.split(',');
@@ -33,6 +29,7 @@ program
   .option('-k, --key-events <events>', 'list the keyboard events to monitor', commaSeparatedList)
   .option('-m, --mouse-events <events>', 'list the mouse events to monitor', commaSeparatedList)
   .description('Start a monitor or all monitors')
+  .action(verifyUser)
   .action(startMonitor);
 
 program
@@ -45,6 +42,7 @@ program
   .option('--logs <logs>', 'list the logs to consider', commaSeparatedList)
   .option('--push', 'push the report to the server')
   .description('Generate a report')
+  .action(verifyUser)
   .action(getReport);
 
 program

@@ -18,7 +18,7 @@ const { blue, blueBright, green, greenBright, red, redBright, yellow, yellowBrig
 let errLogger;
 let opt;
 
-em.name = 'jira';
+em.name = 'network';
 em.init = (options) => {
   errLogger =  log.getLogger('error');
   opt = options || {};
@@ -28,11 +28,11 @@ em.init = (options) => {
 }
 em.start = () => {
   try {
-    em.emit('start', 'jira');
-    const values = [];
+    em.emit('start', 'network');
+    const downSpeed = [], upSpeed = [];
     const numOfDays = 15; // number of days to consider
     let numOfResponses = 0; // number of responses from the server
-    const expectedNumOfRes = 1 * numOfDays; // expected number of responses from the server
+    const expectedNumOfRes = 2 * numOfDays; // expected number of responses from the server
     // ensure folder exists to avoid exceptions
     mkdirp.sync(path.join(__dirname, `../logs/${em.name}`));
     const logs = fs.readdirSync(path.join(__dirname, `../logs/${em.name}`));
@@ -40,7 +40,9 @@ em.start = () => {
     for (let i = 0; i < numOfDays; i++) {
       const date = dayjs().subtract(i, 'day').format('YYYY.MM.DD');
       const logsForDate = logs.filter(l => l.startsWith(date));
-      values[i] = 0;
+      downSpeed[i] = 0;
+      upSpeed[i] = 0;
+      let speedCount = 0;
       for (let j = 0; j < logsForDate.length; j++) {
         const liner = new lineByLine(path.join(__dirname, `../logs/${em.name}/${logsForDate[j]}`));
         let line;
@@ -49,15 +51,28 @@ em.start = () => {
           if (!(lineStr.trim())) {
             continue;
           }
-          values[i] += 1;
+          
+          const jsonStr = lineStr.substring(lineStr.indexOf(' INFO  ') + 7, lineStr.lastIndexOf('}') + 1);
+          const json = JSON.parse(jsonStr);
+          if (!json.connected) {
+            continue;
+          }
+          downSpeed[i] += json.downSpeed;
+          upSpeed[i] += json.upSpeed;
+          speedCount++;
         }
+      }
+      if (speedCount > 0) {
+        downSpeed[i] = downSpeed[i] / speedCount;
+        upSpeed[i] = upSpeed[i] / speedCount;
       }
       // push to server
       if (opt.push) {
         client
           .date(dayjs().subtract(i, 'day').toDate())
           .period('day')
-          .send('jira_comments_per_day', values[i], serverResponse)
+          .send('network_download_speed_per_day', downSpeed[i], serverResponse)
+          .send('network_upload_speed_per_day', upSpeed[i], serverResponse)
       }
     }
 
@@ -67,17 +82,23 @@ em.start = () => {
     function serverResponse(error, result) {
       numOfResponses++;
       if (numOfResponses >= expectedNumOfRes) {
-        em.emit('end', 'jira');
+        em.emit('end', 'network');
       }
     }
 
-    let data = chalk.bold.blueBright('__________Jira__________') + '\n\n';
-    data += blueBright('Comments:') + '\n';
-    data += green(asciichart.plot(values.reverse(), { height: 20 })) + '\n';
-    const totalComments = values.reduce(arraySum);
-    data += `Total comments for the past ${numOfDays} days: ${greenBright(totalComments)}. Average comments/day: ${greenBright(totalComments /numOfDays)}`;
+    let data = chalk.bold.blueBright('__________Network__________') + '\n\n';
+    data += blueBright('Download Speed (Mb/s):') + '\n';
+    data += green(asciichart.plot(downSpeed.reverse(), { height: 20 })) + '\n';
+    const totalDownSpeed = downSpeed.reduce(arraySum);
+    data += `Average download speed/day for the past ${numOfDays} days: ${greenBright(totalDownSpeed / numOfDays)}\n\n`;
+
+
+    data += blueBright('Upload Speed (Mb/s)::') + '\n';
+    data += green(asciichart.plot(upSpeed.reverse(), { height: 20 })) + '\n';
+    const totalUpSpeed = upSpeed.reduce(arraySum);
+    data += `Average upload speed/day for the past ${numOfDays} days: ${greenBright(totalUpSpeed / numOfDays)}`;
     if (!opt.push) {
-      em.emit('end', 'jira');
+      em.emit('end', 'network');
     }
     em.emit('report', {
       output: opt.push ? 'console' : 'file',
@@ -93,7 +114,7 @@ em.start = () => {
     });
   } catch (error) {
     errLogger.info(error); // errLogger.error(...) throws an exception (can you believe that?)
-    em.emit('close', 'jira');
+    em.emit('end', 'network');
   }
 }
 
