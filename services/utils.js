@@ -2,6 +2,7 @@ const chalk = require('chalk');
 const config = require('./config');
 
 const { log } = console;
+const { blue, blueBright, green, greenBright, red, redBright, yellow, yellowBright } = chalk;
 
 function emailIsPresent() {
   if (!config.get('user.email')) {
