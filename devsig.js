@@ -3,7 +3,7 @@ const chalk = require('chalk');
 const pkg = require('./package.json');
 const program = require('commander');
 
-const { verifyUser } = require('./middleware');
+const { lifespan, verifyUser } = require('./middleware');
 const { editConfig, getReport, fix, listMonitors, startMonitor } = require('./commands');
 const { log } = console;
 
@@ -30,6 +30,7 @@ program
   .option('-m, --mouse-events <events>', 'list the mouse events to monitor', commaSeparatedList)
   .description('Start a monitor or all monitors')
   .action(verifyUser)
+  .action(lifespan)
   .action(startMonitor);
 
 program
