@@ -1,7 +1,7 @@
-const lifespan = require('./lifespan');
+const uptime = require('./uptime');
 const verifyUser = require('./verify-user');
 
 module.exports = {
-  lifespan,
+  uptime,
   verifyUser
 };
