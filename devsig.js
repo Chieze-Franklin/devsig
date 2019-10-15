@@ -4,7 +4,7 @@ const pkg = require('./package.json');
 const program = require('commander');
 
 const { uptime, verifyUser } = require('./middleware');
-const { editConfig, getReport, fix, listMonitors, startMonitor } = require('./commands');
+const { autostart, editConfig, getReport, fix, listMonitors, startMonitor } = require('./commands');
 const { log } = console;
 
 log(chalk.bold.blueBright(`DevSig Agent ${pkg.version}`));
@@ -50,6 +50,10 @@ program
   .command('config [field] [value]')
   .description('Get or set the value of a config field')
   .action(editConfig);
+
+program
+  .command('autostart <command>')
+  .action(autostart);
 
 program
   .command('fix')
