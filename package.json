@@ -1,6 +1,6 @@
 {
   "name": "devsig",
-  "version": "1.2.2",
+  "version": "1.2.2-alpha-1",
   "description": "a daemon for collecting work logs from the host machine",
   "main": "devsig.js",
   "scripts": {
@@ -38,6 +38,7 @@
     "is-online": "^8.2.0",
     "mkdirp": "^0.5.1",
     "n-readlines": "^1.0.0",
+    "node-autostart": "^3.0.3",
     "node-cron": "^2.0.3",
     "open": "^6.4.0",
     "rimraf": "^3.0.0",
